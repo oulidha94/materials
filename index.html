@@ -3,1254 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction à l'IA pour les RH — Etik Consulting</title>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>La Scène</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0d1f;
-    --surface: #12162f;
-    --surface2: #1c2142;
-    --border: rgba(201,161,94,0.22);
-    --accent: #c9a15e;
-    --accent2: #c9765a;
-    --accent3: #8fae7f;
-    --text: #f4f0e4;
-    --text-muted: #9296b8;
-    --text-dim: #6b6f94;
-    --gold: #ddbb77;
+  :root{
+    --night-deep:#0a0d1f;
+    --night:#12162f;
+    --night-soft:#1c2142;
+    --ivory:#f4f0e4;
+    --muted:#9296b8;
+    --gold:#c9a15e;
+    --gold-soft:rgba(201,161,94,0.35);
+    --line:rgba(201,161,94,0.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Work Sans',sans-serif;
+    background:var(--night-deep);
+    color:var(--ivory);
+    line-height:1.6;
+    min-height:100vh;
+  }
+  .stars{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 22%, rgba(244,240,228,0.9), transparent),
+      radial-gradient(1px 1px at 28% 68%, rgba(244,240,228,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 45% 12%, rgba(244,240,228,0.8), transparent),
+      radial-gradient(1px 1px at 63% 78%, rgba(244,240,228,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 78% 32%, rgba(244,240,228,0.9), transparent),
+      radial-gradient(1px 1px at 88% 58%, rgba(244,240,228,0.65), transparent),
+      radial-gradient(1.5px 1.5px at 8% 82%, rgba(244,240,228,0.7), transparent),
+      radial-gradient(1px 1px at 55% 45%, rgba(244,240,228,0.5), transparent);
+  }
+  a.back{
+    position:fixed; top:16px; left:16px; z-index:1000;
+    font-family:'Spectral',serif; font-style:italic; font-size:0.78rem;
+    color:rgba(244,240,228,0.45); text-decoration:none;
+  }
+  a.back:hover{ color:rgba(244,240,228,0.85); }
+
+  header{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:6rem 1.5rem 3.5rem;
+    background:radial-gradient(ellipse at 50% 20%, var(--night-soft) 0%, var(--night) 45%, var(--night-deep) 100%);
+  }
+  .eyebrow{
+    font-size:0.7rem; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--gold); font-weight:500; margin-bottom:1.5rem;
+    border:1px solid var(--gold-soft); border-radius:999px; padding:0.4rem 1.1rem;
+  }
+  h1{
+    font-family:'Spectral',serif; font-weight:400; font-style:italic;
+    font-size:clamp(2.2rem, 5.5vw, 3.6rem); margin-bottom:1rem;
+  }
+  .tagline{
+    font-family:'Spectral',serif; font-weight:300;
+    font-size:clamp(0.95rem, 1.8vw, 1.15rem);
+    color:var(--muted); max-width:32em; margin:0 auto;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  main{ position:relative; z-index:1; max-width:900px; margin:0 auto; padding:0 1.5rem 6rem; }
 
-  body {
-    font-family: 'Work Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
+  .liste{ display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .scene{
+    background:var(--night-deep); padding:2rem 2rem;
+    display:flex; align-items:center; gap:1.5rem;
+    text-decoration:none; color:inherit; transition:background 0.2s ease;
   }
+  a.scene:hover{ background:var(--night); }
+  .scene-num{
+    font-family:'Spectral',serif; font-style:italic; font-size:1.5rem;
+    color:var(--gold-soft); min-width:2.5rem;
+  }
+  .scene-corps{ flex:1; }
+  .scene-label{
+    font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold); font-weight:500; margin-bottom:0.4rem; display:block;
+  }
+  .scene-nom{ font-family:'Spectral',serif; font-size:1.25rem; margin-bottom:0.35rem; }
+  .scene-desc{ font-size:0.85rem; color:var(--muted); font-weight:300; }
+  .scene-entrer{
+    font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold);
+    white-space:nowrap;
+  }
+  .scene.a-venir{ opacity:0.4; }
+  .scene.a-venir .scene-label, .scene.a-venir .scene-entrer{ color:var(--muted); }
 
-  /* ========== MODE SWITCH ========== */
-  #mode-toggle {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 1000;
-    display: flex;
-    gap: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 4px;
-  }
-  #mode-toggle button {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 100px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
-  }
-  #mode-toggle button.active {
-    background: var(--accent);
-    color: white;
-  }
-
-  /* ========== PRESENTER MODE ========== */
-  #presenter-mode {
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-  }
-
-  .slide {
-    position: absolute;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 80px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .slide.active {
-    display: flex;
-    opacity: 1;
-  }
-
-  /* Slide backgrounds */
-  .slide-cover { background: radial-gradient(ellipse at 30% 50%, #1a0e3a 0%, #0a0a0f 60%); }
-  .slide-dark { background: var(--bg); }
-  .slide-accent { background: radial-gradient(ellipse at 70% 30%, #1a1230 0%, #0a0a0f 70%); }
-
-  /* Slide decorative elements */
-  .slide::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0.6;
-  }
-
-  .slide-number {
-    position: absolute;
-    bottom: 28px;
-    right: 40px;
-    font-size: 11px;
-    color: var(--text-dim);
-    font-family: 'Spectral', serif;
-    letter-spacing: 0.1em;
-  }
-
-  .slide-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: rgba(108, 99, 255, 0.1);
-    border: 1px solid rgba(108, 99, 255, 0.3);
-    padding: 4px 12px;
-    border-radius: 100px;
-    margin-bottom: 24px;
-  }
-
-  .slide-tag.red { color: var(--accent2); background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); }
-  .slide-tag.green { color: var(--accent3); background: rgba(67,233,123,0.1); border-color: rgba(67,233,123,0.3); }
-  .slide-tag.gold { color: var(--gold); background: rgba(245,200,66,0.1); border-color: rgba(245,200,66,0.3); }
-
-  h1.slide-title {
-    font-family: 'Spectral', serif;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    text-align: center;
-    max-width: 800px;
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-  }
-
-  h2.slide-title {
-    font-family: 'Spectral', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 32px;
-    letter-spacing: -0.02em;
-    align-self: flex-start;
-  }
-
-  .slide-subtitle {
-    font-size: clamp(1rem, 2vw, 1.3rem);
-    color: var(--text-muted);
-    text-align: center;
-    max-width: 600px;
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .slide-body {
-    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
-    color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 720px;
-    width: 100%;
-    font-weight: 300;
-  }
-
-  /* Cards grid */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 900px;
-    margin-top: 8px;
-  }
-  .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 680px; }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-  .card-icon {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .card-title {
-    font-family: 'Spectral', serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-  .card-text {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
-  /* Timeline */
-  .timeline {
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 80px 24px 1fr;
-    gap: 0 16px;
-    align-items: start;
-    position: relative;
-  }
-  .timeline-item:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 103px;
-    top: 24px;
-    bottom: -8px;
-    width: 1px;
-    background: var(--border);
-  }
-  .timeline-year {
-    font-family: 'Spectral', serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent);
-    text-align: right;
-    padding-top: 4px;
-    letter-spacing: 0.05em;
-  }
-  .timeline-dot {
-    width: 10px;
-    height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-  .timeline-content {
-    padding-bottom: 20px;
-  }
-  .timeline-title {
-    font-family: 'Spectral', serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 3px;
-    color: var(--text);
-  }
-  .timeline-desc {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-    font-weight: 300;
-  }
-
-  /* Big stat */
-  .stats-row {
-    display: flex;
-    gap: 40px;
-    margin: 20px 0;
-  }
-  .stat-block {
-    text-align: center;
-  }
-  .stat-number {
-    font-family: 'Spectral', serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .stat-label {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 6px;
-    font-weight: 300;
-    max-width: 140px;
-    line-height: 1.3;
-  }
-
-  /* List bullets */
-  .bullet-list {
-    list-style: none;
-    width: 100%;
-    max-width: 720px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .bullet-list li {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    font-size: clamp(0.85rem, 1.5vw, 1rem);
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-  .bullet-list li::before {
-    content: '→';
-    color: var(--accent);
-    flex-shrink: 0;
-    font-weight: 600;
-    margin-top: 1px;
-  }
-  .bullet-list li strong { color: var(--text); font-weight: 500; }
-
-  /* Two columns */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    width: 100%;
-    max-width: 900px;
-    align-items: start;
-  }
-
-  /* Quote */
-  .quote-block {
-    border-left: 3px solid var(--accent);
-    padding: 16px 24px;
-    background: var(--surface);
-    border-radius: 0 8px 8px 0;
-    max-width: 700px;
-    width: 100%;
-    margin: 16px 0;
-  }
-  .quote-text {
-    font-family: 'Spectral', serif;
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--text);
-    font-style: italic;
-    margin-bottom: 8px;
-  }
-  .quote-source {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    font-weight: 300;
-  }
-
-  /* Warning / alert block */
-  .alert-block {
-    background: rgba(255,107,107,0.08);
-    border: 1px solid rgba(255,107,107,0.25);
-    border-radius: 10px;
-    padding: 16px 20px;
-    max-width: 700px;
-    width: 100%;
-  }
-  .alert-title {
-    font-family: 'Spectral', serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--accent2);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .alert-text {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
-  /* Branding */
-  .etik-logo {
-    position: absolute;
-    bottom: 28px;
-    left: 40px;
-    font-family: 'Spectral', serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-  .etik-logo span { color: var(--accent); }
-
-  /* Nav controls */
-  #nav-controls {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 8px 16px;
-    z-index: 999;
-  }
-  #nav-controls button {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
-    font-family: 'Work Sans', sans-serif;
-  }
-  #nav-controls button:hover { color: var(--text); background: var(--border); }
-  #slide-counter {
-    font-family: 'Spectral', serif;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.08em;
-    min-width: 50px;
-    text-align: center;
-  }
-
-  /* Progress bar */
-  #progress-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: width 0.3s ease;
-    z-index: 998;
-  }
-
-  /* ========== PARTICIPANT MODE ========== */
-  #participant-mode {
-    display: none;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 0;
-  }
-
-  #participant-mode .toc-header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 24px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  #participant-mode .toc-header h1 {
-    font-family: 'Spectral', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  #participant-mode .toc-header span {
-    font-size: 0.75rem;
-    color: var(--accent);
-    background: rgba(108,99,255,0.1);
-    border: 1px solid rgba(108,99,255,0.3);
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-weight: 500;
-  }
-
-  .participant-section {
-    border-bottom: 1px solid var(--border);
-    padding: 0;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .participant-section:hover { background: var(--surface); }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 24px;
-  }
-  .section-num {
-    font-family: 'Spectral', serif;
-    font-size: 0.7rem;
-    font-weight: 800;
-    color: var(--accent);
-    min-width: 28px;
-    letter-spacing: 0.05em;
-  }
-  .section-title {
-    font-family: 'Spectral', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    flex: 1;
-    color: var(--text);
-  }
-  .section-tag {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    font-weight: 300;
-  }
-  .section-chevron {
-    color: var(--text-dim);
-    transition: transform 0.2s;
-    font-size: 0.8rem;
-  }
-  .participant-section.expanded .section-chevron { transform: rotate(90deg); }
-
-  .section-content {
-    display: none;
-    padding: 0 24px 20px 68px;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-  .participant-section.expanded .section-content { display: block; }
-
-  .section-content ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .section-content ul li {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .section-content ul li::before {
-    content: '→';
-    color: var(--accent);
-    flex-shrink: 0;
-    font-weight: 600;
-  }
-  .section-content ul li strong { color: var(--text); font-weight: 500; }
-
-  .section-content .mini-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .section-content .mini-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px;
-  }
-  .section-content .mini-card-title {
-    font-family: 'Spectral', serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .section-content .mini-card-text {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-
-  .participant-footer {
-    padding: 32px 24px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    font-weight: 300;
-  }
-  .participant-footer strong { color: var(--accent); font-weight: 600; }
-
-  /* Divider line */
-  .divider {
-    width: 60px;
-    height: 2px;
-    background: var(--accent);
-    margin: 20px 0;
-    opacity: 0.5;
-  }
-
-  /* Highlight text */
-  .hl { color: var(--text); font-weight: 500; }
-  .hl-accent { color: var(--accent); font-weight: 600; }
-  .hl-gold { color: var(--gold); font-weight: 600; }
-
-  /* Cover specifics */
-  .cover-eyebrow {
-    font-family: 'Spectral', serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-  }
-  .cover-meta {
-    display: flex;
-    gap: 24px;
-    margin-top: 32px;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    font-weight: 300;
-  }
-  .cover-meta span { display: flex; gap: 6px; align-items: center; }
-  .cover-meta strong { color: var(--text-muted); font-weight: 400; }
-
-  /* Decoration circles */
-  .deco-circle {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.04;
-    background: var(--accent);
-    pointer-events: none;
-  }
-
-  @media (max-width: 768px) {
-    .cards-grid { grid-template-columns: 1fr; }
-    .cards-grid.cols-2 { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; gap: 20px; }
-    .stats-row { gap: 20px; flex-wrap: wrap; justify-content: center; }
-  }
+  footer{
+    position:relative; z-index:1; border-top:1px solid var(--line);
+    padding:2.5rem 1.5rem; text-align:center; font-size:0.75rem; color:var(--muted); font-weight:300;
+  }
+  footer a{ color:var(--gold); text-decoration:none; }
 </style>
 </head>
 <body>
 
-<!-- MODE TOGGLE -->
-<div id="mode-toggle">
-  <button class="active" onclick="setMode('presenter')" id="btn-presenter">🎤 Formateur</button>
-  <button onclick="setMode('participant')" id="btn-participant">📱 Participant</button>
-</div>
-<a href="https://stargate.samibenmansour.com" style="position:fixed; top:16px; left:16px; z-index:1000; font-family:'Spectral',serif; font-style:italic; font-size:0.78rem; color:rgba(244,240,228,0.45); text-decoration:none;" onmouseover="this.style.color='rgba(244,240,228,0.85)'" onmouseout="this.style.color='rgba(244,240,228,0.45)'">← Stargate</a>
+<div class="stars" aria-hidden="true"></div>
+<a class="back" href="https://stargate.samibenmansour.com">← Stargate</a>
 
-<!-- ========== PRESENTER MODE ========== -->
-<div id="presenter-mode">
+<header>
+  <span class="eyebrow">collection en cours</span>
+  <h1>La Scène</h1>
+  <p class="tagline">Les formations les plus marquantes, rejouées ici. Chaque support s'ouvre en double lecture, formateur ou participant.</p>
+</header>
 
-  <!-- SLIDE 1 : COVER -->
-  <div class="slide slide-cover active" id="slide-1">
-    <div class="deco-circle" style="width:600px;height:600px;top:-200px;right:-200px;"></div>
-    <div class="deco-circle" style="width:300px;height:300px;bottom:-100px;left:-100px;background:var(--accent2);"></div>
-    <div class="cover-eyebrow">Etik Consulting · Formation Demi-journée</div>
-    <h1 class="slide-title">Introduction à l'IA<br>pour les RH</h1>
-    <p class="slide-subtitle">Comprendre, démystifier, et commencer à utiliser l'intelligence artificielle dans les pratiques RH d'aujourd'hui.</p>
-    <div class="cover-meta">
-      <span>⏱ <strong>4 heures</strong></span>
-      <span>👥 <strong>Professionnels RH</strong></span>
-      <span>🎯 <strong>Niveau découverte</strong></span>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">01 / 11</div>
-  </div>
+<main>
+  <div class="liste">
+    <a class="scene" href="https://materials.samibenmansour.com/introduction-ia-rh/" target="_blank" rel="noopener">
+      <span class="scene-num">01</span>
+      <span class="scene-corps">
+        <span class="scene-label">Formateur / Participant</span>
+        <span class="scene-nom">Introduction à l'IA pour les RH</span>
+        <span class="scene-desc">Un support à double lecture, pour animer ou pour suivre.</span>
+      </span>
+      <span class="scene-entrer">Entrer →</span>
+    </a>
 
-  <!-- SLIDE 2 : OBJECTIFS -->
-  <div class="slide slide-dark" id="slide-2">
-    <div class="slide-tag">Cadrage</div>
-    <h2 class="slide-title">Ce que vous allez<br>emporter aujourd'hui</h2>
-    <ul class="bullet-list">
-      <li><strong>Comprendre</strong> ce qu'est réellement l'IA — sans le bruit médiatique</li>
-      <li><strong>Identifier</strong> les cas d'usage RH concrets et applicables dès maintenant</li>
-      <li><strong>Évaluer</strong> les risques et limites que tout professionnel RH doit connaître</li>
-      <li><strong>Expérimenter</strong> en direct sur des tâches RH réelles</li>
-      <li><strong>Construire</strong> une posture professionnelle face à la transformation IA</li>
-    </ul>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">02 / 11</div>
-  </div>
-
-  <!-- SLIDE 3 : MYTHES -->
-  <div class="slide slide-accent" id="slide-3">
-    <div class="slide-tag red">Démystification</div>
-    <h2 class="slide-title">Ce que l'IA n'est pas</h2>
-    <div class="cards-grid">
-      <div class="card">
-        <span class="card-icon">🤖</span>
-        <div class="card-title">Pas une intelligence</div>
-        <div class="card-text">L'IA ne "pense" pas. Elle prédit des tokens à partir de patterns statistiques sur des milliards de textes.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">🔮</span>
-        <div class="card-title">Pas omnisciente</div>
-        <div class="card-text">Elle a une date de coupure, hallucine des faits, et ne connaît pas votre contexte organisationnel.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">⚡</span>
-        <div class="card-title">Pas une révolution soudaine</div>
-        <div class="card-text">Les fondements existent depuis les années 50. ChatGPT a rendu visible ce qui était déjà là.</div>
-      </div>
-    </div>
-    <div class="alert-block" style="margin-top:20px;">
-      <div class="alert-title">⚠ Point critique</div>
-      <div class="alert-text">80% de la panique autour de l'IA vient d'une confusion entre IA générative (LLM) et IA au sens large. Ce sont des outils différents avec des implications différentes.</div>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">03 / 11</div>
-  </div>
-
-  <!-- SLIDE 4 : CHRONOLOGIE -->
-  <div class="slide slide-dark" id="slide-4">
-    <div class="slide-tag">Contexte</div>
-    <h2 class="slide-title">40 ans en 5 étapes</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-year">1956</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-title">Naissance de l'IA</div>
-          <div class="timeline-desc">Conférence de Dartmouth — le terme "artificial intelligence" est inventé.</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">1990s</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-title">Machine Learning</div>
-          <div class="timeline-desc">Les machines apprennent à partir de données sans être explicitement programmées.</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2012</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-title">Deep Learning</div>
-          <div class="timeline-desc">AlexNet révolutionne la reconnaissance d'images. Les réseaux de neurones profonds s'imposent.</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2017</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-title">Architecture Transformer</div>
-          <div class="timeline-desc">"Attention is all you need" — le papier fondateur de tous les LLM modernes.</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2022→</div>
-        <div class="timeline-dot" style="background:var(--accent2);"></div>
-        <div class="timeline-content">
-          <div class="timeline-title">IA générative grand public</div>
-          <div class="timeline-desc">ChatGPT, Claude, Gemini. L'IA devient accessible à tous, y compris aux RH.</div>
-        </div>
-      </div>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">04 / 11</div>
-  </div>
-
-  <!-- SLIDE 5 : STATS IMPACT -->
-  <div class="slide slide-accent" id="slide-5">
-    <div class="slide-tag gold">Chiffres clés</div>
-    <h2 class="slide-title">L'IA dans les RH :<br>où en sommes-nous ?</h2>
-    <div class="stats-row">
-      <div class="stat-block">
-        <div class="stat-number">76%</div>
-        <div class="stat-label">des DRH prévoient d'intégrer l'IA d'ici 2026</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">40%</div>
-        <div class="stat-label">du temps RH consacré à des tâches automatisables</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">3×</div>
-        <div class="stat-label">plus vite — rédaction d'offres d'emploi avec assistance IA</div>
-      </div>
-    </div>
-    <div class="quote-block">
-      <div class="quote-text">"L'IA ne remplacera pas les RH. Mais les RH qui utilisent l'IA remplaceront ceux qui ne l'utilisent pas."</div>
-      <div class="quote-source">— Reformulation d'un consensus émergent dans la littérature RH 2024</div>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">05 / 11</div>
-  </div>
-
-  <!-- SLIDE 6 : CAS D'USAGE -->
-  <div class="slide slide-dark" id="slide-6">
-    <div class="slide-tag green">Cas d'usage</div>
-    <h2 class="slide-title">L'IA dans le cycle RH</h2>
-    <div class="cards-grid">
-      <div class="card">
-        <span class="card-icon">📝</span>
-        <div class="card-title">Recrutement</div>
-        <div class="card-text">Rédaction d'offres, screening de CV, scoring de candidatures, pré-qualification automatisée.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">🎓</span>
-        <div class="card-title">Formation</div>
-        <div class="card-text">Conception de parcours, génération de contenus, quiz, scénarisation pédagogique à la demande.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">📊</span>
-        <div class="card-title">People Analytics</div>
-        <div class="card-text">Analyse prédictive du turnover, détection de signaux faibles d'engagement, tableaux de bord.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">📋</span>
-        <div class="card-title">Administration</div>
-        <div class="card-text">Rédaction de politiques RH, synthèse de réunions, réponses aux questions fréquentes des collaborateurs.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">🔍</span>
-        <div class="card-title">Diagnostic RH</div>
-        <div class="card-text">Analyse de documents organisationnels, détection d'incohérences, rapport d'audit structuré.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">🌱</span>
-        <div class="card-title">Développement</div>
-        <div class="card-text">Plans de carrière personnalisés, référentiels de compétences, matrices de succession.</div>
-      </div>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">06 / 11</div>
-  </div>
-
-  <!-- SLIDE 7 : RISQUES -->
-  <div class="slide slide-accent" id="slide-7">
-    <div class="slide-tag red">Risques &amp; limites</div>
-    <h2 class="slide-title">Ce que l'IA peut<br>vous coûter</h2>
-    <div class="two-col">
-      <ul class="bullet-list">
-        <li><strong>Biais algorithmiques</strong> — les modèles reproduisent les biais de leurs données d'entraînement</li>
-        <li><strong>Hallucinations</strong> — des faits inventés présentés avec confiance</li>
-        <li><strong>Confidentialité</strong> — données personnelles et RGPD dans les prompts</li>
-        <li><strong>Désintermédiation humaine</strong> — perte du jugement clinique RH</li>
-      </ul>
-      <ul class="bullet-list">
-        <li><strong>Dépendance aux outils</strong> — compétence interne qui s'atrophie</li>
-        <li><strong>Illusion de neutralité</strong> — l'IA n'est pas objective, elle est statistique</li>
-        <li><strong>Responsabilité juridique</strong> — qui décide, qui répond ?</li>
-        <li><strong>Surconfiance</strong> — l'output fluide masque l'erreur de fond</li>
-      </ul>
-    </div>
-    <div class="alert-block" style="margin-top:20px;">
-      <div class="alert-title">Règle professionnelle</div>
-      <div class="alert-text">Toute décision RH qui impacte un individu (recrutement, promotion, sanction) ne peut pas être déléguée à un algorithme. L'IA assiste, le RH décide.</div>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">07 / 11</div>
-  </div>
-
-  <!-- SLIDE 8 : PROMPT ENGINEERING -->
-  <div class="slide slide-dark" id="slide-8">
-    <div class="slide-tag">Pratique</div>
-    <h2 class="slide-title">Parler à une IA :<br>l'art du prompt</h2>
-    <div class="cards-grid cols-2" style="max-width:800px;">
-      <div class="card" style="border-color:rgba(255,107,107,0.3);">
-        <div class="card-title" style="color:var(--accent2);">❌ Prompt pauvre</div>
-        <div class="card-text" style="font-family:monospace;font-size:0.8rem;color:var(--text-dim);">"Rédige une offre d'emploi pour un RH"</div>
-        <div class="card-text" style="margin-top:8px;">Résultat : générique, inutilisable, sans contexte</div>
-      </div>
-      <div class="card" style="border-color:rgba(67,233,123,0.3);">
-        <div class="card-title" style="color:var(--accent3);">✓ Prompt structuré</div>
-        <div class="card-text" style="font-family:monospace;font-size:0.75rem;color:var(--text-dim);">"Tu es expert RH. Rédige une offre pour un HRBP senior, secteur bancaire, 7 ans d'expérience requis, basé à Tunis, ton professionnel et direct."</div>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <ul class="bullet-list" style="max-width:700px;">
-      <li><strong>Rôle</strong> — donner une identité à l'IA ("tu es...")</li>
-      <li><strong>Contexte</strong> — secteur, taille d'entreprise, culture</li>
-      <li><strong>Tâche précise</strong> — verbe d'action clair et unique</li>
-      <li><strong>Contraintes</strong> — format, longueur, ton, ce qu'il ne faut pas faire</li>
-    </ul>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">08 / 11</div>
-  </div>
-
-  <!-- SLIDE 9 : ATELIER PRATIQUE -->
-  <div class="slide slide-accent" id="slide-9">
-    <div class="slide-tag green">Atelier</div>
-    <h2 class="slide-title">Mise en pratique<br>guidée — 45 min</h2>
-    <div class="cards-grid">
-      <div class="card">
-        <span class="card-icon">✍️</span>
-        <div class="card-title">Exercice 1</div>
-        <div class="card-text">Rédiger une offre d'emploi pour un poste de votre organisation. Comparer version IA vs version manuelle.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">🔎</span>
-        <div class="card-title">Exercice 2</div>
-        <div class="card-text">Soumettre 3 CV fictifs à l'IA pour screening. Identifier les biais éventuels dans les recommandations.</div>
-      </div>
-      <div class="card">
-        <span class="card-icon">📄</span>
-        <div class="card-title">Exercice 3</div>
-        <div class="card-text">Dicter une politique RH en 3 lignes. Demander à l'IA de la rédiger, puis la critiquer ensemble.</div>
-      </div>
-    </div>
-    <div class="quote-block" style="margin-top:16px;">
-      <div class="quote-text">L'apprentissage par l'erreur est plus puissant que l'apprentissage par la démonstration.</div>
-      <div class="quote-source">— Principe pédagogique actif</div>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">09 / 11</div>
-  </div>
-
-  <!-- SLIDE 10 : POSTURE PROFESSIONNELLE -->
-  <div class="slide slide-dark" id="slide-10">
-    <div class="slide-tag gold">Positionnement</div>
-    <h2 class="slide-title">Le RH augmenté :<br>une nouvelle posture</h2>
-    <div class="two-col">
-      <div>
-        <div class="slide-tag" style="margin-bottom:16px;">Ce que l'IA fait mieux</div>
-        <ul class="bullet-list">
-          <li>Traitement de volumes de données</li>
-          <li>Rédaction rapide de premiers jets</li>
-          <li>Cohérence formelle des documents</li>
-          <li>Disponibilité 24/7 et scalabilité</li>
-        </ul>
-      </div>
-      <div>
-        <div class="slide-tag green" style="margin-bottom:16px;">Ce que le RH fait mieux</div>
-        <ul class="bullet-list">
-          <li>Jugement contextuel et éthique</li>
-          <li>Relation de confiance avec les équipes</li>
-          <li>Lecture des signaux informels</li>
-          <li>Responsabilité et redevabilité</li>
-        </ul>
-      </div>
-    </div>
-    <div class="divider" style="margin:16px auto;"></div>
-    <p class="slide-body" style="text-align:center;">L'IA est un <span class="hl-accent">levier d'efficacité</span>, pas un substitut au jugement humain. Le professionnel RH qui comprend ses limites devient <span class="hl-gold">irremplaçable</span>.</p>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">10 / 11</div>
-  </div>
-
-  <!-- SLIDE 11 : CLÔTURE -->
-  <div class="slide slide-cover" id="slide-11">
-    <div class="deco-circle" style="width:500px;height:500px;top:-150px;left:-150px;"></div>
-    <div class="slide-tag">À retenir</div>
-    <h2 class="slide-title" style="text-align:center;align-self:auto;">3 choses à faire<br>dès demain</h2>
-    <ul class="bullet-list" style="max-width:580px;margin-top:8px;">
-      <li><strong>Tester</strong> un outil IA gratuit sur une vraie tâche RH de votre quotidien</li>
-      <li><strong>Définir</strong> une ligne rouge personnelle — ce que vous ne déléguerez jamais à l'IA</li>
-      <li><strong>Partager</strong> ce que vous avez appris aujourd'hui avec un collègue RH</li>
-    </ul>
-    <div class="cover-meta" style="margin-top:28px;">
-      <span>📧 <strong>contact@etikconsulting.com</strong></span>
-      <span>🌐 <strong>etikconsulting.com</strong></span>
-    </div>
-    <div class="etik-logo"><span>Etik</span> Consulting</div>
-    <div class="slide-number">11 / 11</div>
-  </div>
-
-  <!-- NAV CONTROLS -->
-  <div id="nav-controls">
-    <button onclick="prevSlide()" title="Précédent (←)">←</button>
-    <span id="slide-counter">1 / 11</span>
-    <button onclick="nextSlide()" title="Suivant (→)">→</button>
-  </div>
-  <div id="progress-bar"></div>
-
-</div>
-
-<!-- ========== PARTICIPANT MODE ========== -->
-<div id="participant-mode">
-  <div class="toc-header">
-    <h1>IA pour les RH — Etik Consulting</h1>
-    <span>Mode participant</span>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">01</div>
-      <div class="section-title">Objectifs de la formation</div>
-      <div class="section-tag">Cadrage</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>Comprendre</strong> ce qu'est réellement l'IA — sans le bruit médiatique</li>
-        <li><strong>Identifier</strong> les cas d'usage RH concrets et applicables dès maintenant</li>
-        <li><strong>Évaluer</strong> les risques et limites que tout professionnel RH doit connaître</li>
-        <li><strong>Expérimenter</strong> en direct sur des tâches RH réelles</li>
-        <li><strong>Construire</strong> une posture professionnelle face à la transformation IA</li>
-      </ul>
+    <div class="scene a-venir">
+      <span class="scene-num">02</span>
+      <span class="scene-corps">
+        <span class="scene-label">À venir</span>
+        <span class="scene-nom">Prochaine scène</span>
+        <span class="scene-desc">Une autre formation rejouera bientôt ici.</span>
+      </span>
+      <span class="scene-entrer">Bientôt</span>
     </div>
   </div>
+</main>
 
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">02</div>
-      <div class="section-title">Ce que l'IA n'est pas</div>
-      <div class="section-tag">Démystification</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <div class="mini-cards">
-        <div class="mini-card">
-          <div class="mini-card-title">🤖 Pas une intelligence</div>
-          <div class="mini-card-text">Prédiction de tokens basée sur des patterns statistiques, pas de pensée réelle.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">🔮 Pas omnisciente</div>
-          <div class="mini-card-text">Date de coupure, hallucinations, absence de contexte organisationnel.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">⚡ Pas soudaine</div>
-          <div class="mini-card-text">Fondements depuis les années 50. ChatGPT a rendu visible l'invisible.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">⚠ Point critique</div>
-          <div class="mini-card-text">IA générative ≠ IA au sens large. Deux réalités différentes, implications différentes.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<footer>
+  <a href="https://stargate.samibenmansour.com">Stargate</a> · <a href="https://samibenmansour.com">samibenmansour.com</a>
+</footer>
 
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">03</div>
-      <div class="section-title">40 ans d'histoire en 5 étapes</div>
-      <div class="section-tag">Contexte</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>1956</strong> — Naissance de l'IA (Conférence de Dartmouth)</li>
-        <li><strong>1990s</strong> — Machine Learning : les machines apprennent des données</li>
-        <li><strong>2012</strong> — Deep Learning : AlexNet révolutionne la reconnaissance d'images</li>
-        <li><strong>2017</strong> — Architecture Transformer : "Attention is all you need"</li>
-        <li><strong>2022→</strong> — IA générative grand public : ChatGPT, Claude, Gemini</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">04</div>
-      <div class="section-title">Chiffres clés — L'IA dans les RH</div>
-      <div class="section-tag">Données</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>76%</strong> des DRH prévoient d'intégrer l'IA d'ici 2026</li>
-        <li><strong>40%</strong> du temps RH consacré à des tâches potentiellement automatisables</li>
-        <li><strong>3× plus vite</strong> — rédaction d'offres d'emploi avec assistance IA</li>
-      </ul>
-      <p style="margin-top:12px;font-style:italic;color:var(--text-dim);font-size:0.82rem;">"L'IA ne remplacera pas les RH. Mais les RH qui utilisent l'IA remplaceront ceux qui ne l'utilisent pas."</p>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">05</div>
-      <div class="section-title">Cas d'usage dans le cycle RH</div>
-      <div class="section-tag">Applications</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <div class="mini-cards">
-        <div class="mini-card">
-          <div class="mini-card-title">📝 Recrutement</div>
-          <div class="mini-card-text">Offres, screening CV, scoring, pré-qualification automatisée.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">🎓 Formation</div>
-          <div class="mini-card-text">Parcours, contenus, quiz, scénarisation pédagogique.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">📊 People Analytics</div>
-          <div class="mini-card-text">Turnover prédictif, engagement, tableaux de bord.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">📋 Administration</div>
-          <div class="mini-card-text">Politiques RH, synthèse de réunions, FAQ collaborateurs.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">🔍 Diagnostic RH</div>
-          <div class="mini-card-text">Analyse documentaire, détection d'incohérences, audit.</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">🌱 Développement</div>
-          <div class="mini-card-text">Plans de carrière, référentiels compétences, succession.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">06</div>
-      <div class="section-title">Risques et limites à connaître</div>
-      <div class="section-tag">Vigilance</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>Biais algorithmiques</strong> — les modèles reproduisent les biais de leurs données</li>
-        <li><strong>Hallucinations</strong> — des faits inventés présentés avec confiance</li>
-        <li><strong>RGPD</strong> — données personnelles dans les prompts : attention légale</li>
-        <li><strong>Désintermédiation humaine</strong> — perte du jugement clinique RH</li>
-        <li><strong>Illusion de neutralité</strong> — l'IA est statistique, pas objective</li>
-        <li><strong>Responsabilité juridique</strong> — qui décide, qui répond devant la loi ?</li>
-      </ul>
-      <p style="margin-top:12px;padding:10px 14px;background:rgba(255,107,107,0.08);border-radius:8px;font-size:0.82rem;color:var(--text-muted);">
-        <strong style="color:var(--accent2);">Règle :</strong> Toute décision RH qui impacte un individu ne peut pas être déléguée à un algorithme. L'IA assiste, le RH décide.
-      </p>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">07</div>
-      <div class="section-title">L'art du prompt — bases pratiques</div>
-      <div class="section-tag">Méthode</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>Rôle</strong> — donner une identité à l'IA ("tu es expert RH, tu...")</li>
-        <li><strong>Contexte</strong> — secteur, taille entreprise, culture organisationnelle</li>
-        <li><strong>Tâche précise</strong> — un verbe d'action clair et une seule mission</li>
-        <li><strong>Contraintes</strong> — format, longueur, ton, ce qu'il ne faut pas faire</li>
-      </ul>
-      <p style="margin-top:12px;font-size:0.82rem;color:var(--text-dim);font-family:monospace;">
-        Exemple : "Tu es expert RH. Rédige une offre pour un HRBP senior, secteur bancaire, 7 ans d'expérience, basé à Tunis, ton professionnel et direct, maximum 300 mots."
-      </p>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">08</div>
-      <div class="section-title">Atelier pratique — 3 exercices</div>
-      <div class="section-tag">Pratique</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>Exercice 1</strong> — Rédiger une offre d'emploi avec l'IA et comparer à une version manuelle</li>
-        <li><strong>Exercice 2</strong> — Soumettre 3 CV fictifs pour screening et identifier les biais éventuels</li>
-        <li><strong>Exercice 3</strong> — Dicter une politique RH en 3 lignes, faire rédiger, puis critiquer ensemble</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">09</div>
-      <div class="section-title">Le RH augmenté — nouvelle posture</div>
-      <div class="section-tag">Positionnement</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <div class="mini-cards">
-        <div class="mini-card">
-          <div class="mini-card-title">Ce que l'IA fait mieux</div>
-          <div class="mini-card-text">Volume de données · Rédaction rapide · Cohérence formelle · Disponibilité 24/7</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-card-title">Ce que le RH fait mieux</div>
-          <div class="mini-card-text">Jugement éthique · Relation de confiance · Signaux informels · Redevabilité</div>
-        </div>
-      </div>
-      <p style="margin-top:12px;font-size:0.85rem;color:var(--text-muted);">L'IA est un levier d'efficacité, pas un substitut au jugement humain. Le professionnel RH qui comprend ses limites devient irremplaçable.</p>
-    </div>
-  </div>
-
-  <div class="participant-section" onclick="toggleSection(this)">
-    <div class="section-header">
-      <div class="section-num">10</div>
-      <div class="section-title">3 actions à faire dès demain</div>
-      <div class="section-tag">À retenir</div>
-      <div class="section-chevron">▶</div>
-    </div>
-    <div class="section-content">
-      <ul>
-        <li><strong>Tester</strong> un outil IA gratuit sur une vraie tâche RH de votre quotidien</li>
-        <li><strong>Définir</strong> une ligne rouge personnelle — ce que vous ne déléguerez jamais à l'IA</li>
-        <li><strong>Partager</strong> ce que vous avez appris aujourd'hui avec un collègue RH</li>
-      </ul>
-      <p style="margin-top:16px;font-size:0.82rem;color:var(--text-dim);">contact@etikconsulting.com · etikconsulting.com</p>
-    </div>
-  </div>
-
-  <div class="participant-footer">
-    Formation conçue et animée par <strong>Etik Consulting</strong><br>
-    <span style="font-size:0.72rem;margin-top:4px;display:block;">Sami Ben Mansour · Senior HR Consultant &amp; International Trainer</span>
-  </div>
-</div>
-
-<script>
-  let currentSlide = 1;
-  const totalSlides = 11;
-
-  function showSlide(n) {
-    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-    currentSlide = Math.max(1, Math.min(n, totalSlides));
-    document.getElementById('slide-' + currentSlide).classList.add('active');
-    document.getElementById('slide-counter').textContent = currentSlide + ' / ' + totalSlides;
-    document.getElementById('progress-bar').style.width = (currentSlide / totalSlides * 100) + '%';
-  }
-
-  function nextSlide() { showSlide(currentSlide + 1); }
-  function prevSlide() { showSlide(currentSlide - 1); }
-
-  document.addEventListener('keydown', (e) => {
-    if (document.getElementById('presenter-mode').style.display !== 'none' ||
-        !document.getElementById('participant-mode').style.display || 
-        document.getElementById('participant-mode').style.display === 'none') {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
-    }
-  });
-
-  function setMode(mode) {
-    const presenter = document.getElementById('presenter-mode');
-    const participant = document.getElementById('participant-mode');
-    const btnP = document.getElementById('btn-presenter');
-    const btnA = document.getElementById('btn-participant');
-    const nav = document.getElementById('nav-controls');
-    const prog = document.getElementById('progress-bar');
-
-    if (mode === 'presenter') {
-      presenter.style.display = 'block';
-      participant.style.display = 'none';
-      nav.style.display = 'flex';
-      prog.style.display = 'block';
-      btnP.classList.add('active');
-      btnA.classList.remove('active');
-      document.body.style.overflow = 'hidden';
-    } else {
-      presenter.style.display = 'none';
-      participant.style.display = 'block';
-      nav.style.display = 'none';
-      prog.style.display = 'none';
-      btnA.classList.add('active');
-      btnP.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-  }
-
-  function toggleSection(el) {
-    el.classList.toggle('expanded');
-  }
-
-  // Check URL param on load
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('mode') === 'participant') {
-    setMode('participant');
-  }
-
-  // Init
-  showSlide(1);
-</script>
 </body>
 </html>
